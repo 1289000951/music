@@ -106,83 +106,14 @@
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
         }
 
-        .search-input-container {
-            position: relative;
-            flex: 1;
-        }
-
         .search-input {
-            width: 100%;
+            flex: 1;
             padding: 12px 20px;
             background: transparent;
             border: none;
             color: #fff;
             font-size: 16px;
             outline: none;
-        }
-        
-        .search-history-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: rgba(30, 30, 40, 0.95);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            margin-top: 10px;
-            z-index: 100;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-        }
-        
-        .search-history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .clear-history-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .clear-history-btn:hover {
-            color: #ff6b6b;
-        }
-        
-        .search-history-list {
-            padding: 5px 0;
-        }
-        
-        .search-history-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .search-history-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .search-history-item i {
-            margin-right: 10px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .search-history-item span {
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .search-input::placeholder {
@@ -424,35 +355,6 @@
             color: rgba(255, 255, 255, 0.5);
             font-size: 14px;
             margin-left: 15px;
-        }
-        
-        /* 分类过滤器 */
-        .category-filter {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-            gap: 8px;
-        }
-
-        .category-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 5px 12px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
-        .category-btn.active {
-            background: #ff6b6b;
-            color: #fff;
         }
 
         /* 播放器区域 */
@@ -958,18 +860,7 @@
             
             <div class="search-container">
                 <div class="search-wrapper">
-                    <div class="search-input-container">
-                        <input type="text" class="search-input" placeholder="搜索音乐、歌手、专辑..." id="searchInput">
-                        <div class="search-history-dropdown" id="searchHistoryDropdown">
-                            <div class="search-history-header">
-                                <span>搜索历史</span>
-                                <button class="clear-history-btn" onclick="clearSearchHistory()">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                            <div class="search-history-list" id="searchHistoryList"></div>
-                        </div>
-                    </div>
+                    <input type="text" class="search-input" placeholder="搜索音乐、歌手、专辑..." id="searchInput">
                     <select class="source-select" id="sourceSelect">
                         <option value="netease">网易云音乐</option>
                         <option value="tencent">QQ音乐</option>
@@ -1006,9 +897,6 @@
                 <button class="tab-btn" onclick="switchTab('playlist')">
                     <i class="fas fa-list-music"></i> 网易云歌单
                 </button>
-                <button class="tab-btn" onclick="switchTab('daily')">
-                    <i class="fas fa-calendar-day"></i> 今日推荐
-                </button>
             </div>
 
             <div id="searchTab" class="tab-content active">
@@ -1031,28 +919,6 @@
                     <div class="empty-state">
                         <i class="fas fa-list-ol"></i>
                         <div>输入歌单ID后点击解析</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="dailyTab" class="tab-content">
-                <h3 class="section-title">
-                    <i class="fas fa-calendar-day"></i>
-                    今日歌单推荐
-                </h3>
-                <div class="category-filter">
-                    <button class="category-btn active" data-category="all">全部</button>
-                    <button class="category-btn" data-category="douyin">抖音热门</button>
-                    <button class="category-btn" data-category="motivational">励志</button>
-                    <button class="category-btn" data-category="light">轻音乐</button>
-                    <button class="category-btn" data-category="dj">DJ</button>
-                    <button class="category-btn" data-category="chinese">华语</button>
-                    <button class="category-btn" data-category="western">欧美</button>
-                </div>
-                <div class="search-results" id="dailyResults">
-                    <div class="loading">
-                        <i class="fas fa-spinner"></i>
-                        <div>正在加载今日推荐...</div>
                     </div>
                 </div>
             </div>
@@ -1153,56 +1019,6 @@
         let isUserScrolling = false; // 用户是否正在手动滚动歌词
         let userScrollTimeout; // 用于检测用户停止滚动的计时器
         let playlistData = []; // 存储当前解析的歌单数据
-        
-        // 页面加载完成后初始化搜索历史
-        document.addEventListener('DOMContentLoaded', function() {
-            // 初始化搜索历史下拉框
-            updateSearchHistoryDropdown();
-            
-            // 为搜索输入框添加事件监听
-            const searchInput = document.getElementById('searchInput');
-            
-            // 点击搜索框时显示历史记录
-            searchInput.addEventListener('click', function() {
-                showSearchHistoryDropdown();
-            });
-            
-            // 输入时显示历史记录
-            searchInput.addEventListener('focus', function() {
-                showSearchHistoryDropdown();
-            });
-            
-            // 输入时获取搜索建议
-            searchInput.addEventListener('input', function() {
-                const keyword = this.value.trim();
-                
-                // 清除之前的超时
-                if (suggestionsTimeout) {
-                    clearTimeout(suggestionsTimeout);
-                }
-                
-                // 如果输入为空，显示历史记录
-                if (!keyword || keyword.length < 2) {
-                    updateSearchHistoryDropdown();
-                    return;
-                }
-                
-                // 设置超时，避免频繁请求
-                suggestionsTimeout = setTimeout(async () => {
-                    const suggestions = await getSearchSuggestions(keyword);
-                    updateSearchSuggestions(suggestions);
-                    showSearchHistoryDropdown();
-                }, 300);
-            });
-            
-            // 点击页面其他地方时隐藏历史记录
-            document.addEventListener('click', function(event) {
-                const searchContainer = document.querySelector('.search-input-container');
-                if (!searchContainer.contains(event.target)) {
-                    hideSearchHistoryDropdown();
-                }
-            });
-        });
 
         const audioPlayer = document.getElementById('audioPlayer');
         const playBtn = document.getElementById('playBtn');
@@ -1217,139 +1033,6 @@
         const canvasCtx = canvas.getContext('2d');
         let animationId;
 
-        // 搜索历史相关函数
-        function loadSearchHistory() {
-            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-            return history;
-        }
-        
-        function saveSearchHistory(keyword, source) {
-            const history = loadSearchHistory();
-            
-            // 检查是否已存在相同的搜索词
-            const existingIndex = history.findIndex(item => 
-                item.keyword === keyword && item.source === source
-            );
-            
-            // 如果存在，先删除旧的
-            if (existingIndex !== -1) {
-                history.splice(existingIndex, 1);
-            }
-            
-            // 添加到历史记录的开头
-            history.unshift({
-                keyword,
-                source,
-                timestamp: new Date().getTime()
-            });
-            
-            // 只保留最近的10条记录
-            const trimmedHistory = history.slice(0, 10);
-            
-            localStorage.setItem('searchHistory', JSON.stringify(trimmedHistory));
-            updateSearchHistoryDropdown();
-        }
-        
-        function clearSearchHistory() {
-            localStorage.removeItem('searchHistory');
-            updateSearchHistoryDropdown();
-            hideSearchHistoryDropdown();
-            showNotification('搜索历史已清空', 'success');
-        }
-        
-        function updateSearchHistoryDropdown() {
-            const historyList = document.getElementById('searchHistoryList');
-            const history = loadSearchHistory();
-            
-            historyList.innerHTML = '';
-            
-            if (history.length === 0) {
-                historyList.innerHTML = '<div class="search-history-item"><span>暂无搜索历史</span></div>';
-                return;
-            }
-            
-            history.forEach(item => {
-                const historyItem = document.createElement('div');
-                historyItem.className = 'search-history-item';
-                historyItem.innerHTML = `
-                    <i class="fas fa-history"></i>
-                    <span>${item.keyword}</span>
-                `;
-                
-                historyItem.addEventListener('click', () => {
-                    document.getElementById('searchInput').value = item.keyword;
-                    document.getElementById('sourceSelect').value = item.source;
-                    hideSearchHistoryDropdown();
-                    searchMusic();
-                });
-                
-                historyList.appendChild(historyItem);
-            });
-        }
-        
-        function showSearchHistoryDropdown() {
-            const dropdown = document.getElementById('searchHistoryDropdown');
-            dropdown.style.display = 'block';
-        }
-        
-        function hideSearchHistoryDropdown() {
-            const dropdown = document.getElementById('searchHistoryDropdown');
-            dropdown.style.display = 'none';
-        }
-        
-        // 搜索建议功能
-        let suggestionsTimeout;
-        
-        async function getSearchSuggestions(keyword) {
-            if (!keyword || keyword.length < 2) return [];
-            
-            try {
-                const source = document.getElementById('sourceSelect').value;
-                const response = await fetch(`${API_BASE}?types=suggest&source=${source}&name=${encodeURIComponent(keyword)}`);
-                const data = await response.json();
-                return data || [];
-            } catch (error) {
-                console.error('获取搜索建议失败:', error);
-                return [];
-            }
-        }
-        
-        function updateSearchSuggestions(suggestions) {
-            const historyList = document.getElementById('searchHistoryList');
-            
-            // 如果没有建议，显示历史记录
-            if (!suggestions || suggestions.length === 0) {
-                updateSearchHistoryDropdown();
-                return;
-            }
-            
-            historyList.innerHTML = '';
-            
-            // 添加标题
-            const header = document.createElement('div');
-            header.className = 'search-history-header';
-            header.innerHTML = '<span>搜索建议</span>';
-            historyList.appendChild(header);
-            
-            // 添加建议项
-            suggestions.forEach(suggestion => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.className = 'search-history-item';
-                suggestionItem.innerHTML = `
-                    <i class="fas fa-search"></i>
-                    <span>${suggestion}</span>
-                `;
-                
-                suggestionItem.addEventListener('click', () => {
-                    document.getElementById('searchInput').value = suggestion;
-                    hideSearchHistoryDropdown();
-                    searchMusic();
-                });
-                
-                historyList.appendChild(suggestionItem);
-            });
-        }
-        
         // 搜索音乐
         async function searchMusic() {
             const keyword = document.getElementById('searchInput').value.trim();
@@ -1359,12 +1042,6 @@
                 showNotification('请输入搜索关键词', 'warning');
                 return;
             }
-            
-            // 保存到搜索历史
-            saveSearchHistory(keyword, source);
-            
-            // 隐藏搜索历史下拉框
-            hideSearchHistoryDropdown();
 
             const resultsContainer = document.getElementById('searchResults');
             resultsContainer.innerHTML = `
@@ -2085,300 +1762,12 @@
         setVolume(80);
         initAudioVisualizer();
         
-        // 页面加载完成后的欢迎信息和加载今日推荐
+        // 页面加载完成后的欢迎信息
         window.addEventListener('load', () => {
             setTimeout(() => {
                 showNotification('欢迎使用云音乐播放器！', 'success');
-                loadDailyRecommendations();
             }, 1000);
         });
-        
-        // 加载今日推荐歌单
-        async function loadDailyRecommendations(refresh = false) {
-            const dailyResultsContainer = document.getElementById('dailyResults');
-            
-            try {
-                // 所有可用的歌单
-                const allPlaylists = [
-                    { id: '3778678', name: '热门华语', description: '最热门的华语歌曲合集', category: 'chinese' },
-                    { id: '2884035', name: '情感电台', description: '治愈系情感音乐电台', category: 'light' },
-                    { id: '5059661515', name: '欧美经典', description: '欧美经典金曲合集', category: 'western' },
-                    { id: '2829883282', name: '古风精选', description: '中国风古典音乐精选', category: 'chinese' },
-                    { id: '2829896389', name: '轻音乐', description: '舒缓放松的轻音乐合集', category: 'light' },
-                    { id: '7452421335', name: '抖音热歌2023', description: '最火抖音歌曲合集', category: 'douyin' },
-                    { id: '2200869969', name: 'DJ舞曲', description: '劲爆DJ混音', category: 'dj' },
-                    { id: '2829922548', name: '励志金曲', description: '激励人心的动力歌曲', category: 'motivational' },
-                    { id: '2829844572', name: '抖音神曲', description: '抖音最热门歌曲', category: 'douyin' },
-                    { id: '2829816368', name: '电音派对', description: 'EDM超嗨现场', category: 'dj' },
-                    { id: '60198', name: '摇滚经典', description: '摇滚乐精选', category: 'rock' },
-                    { id: '5271025', name: '爵士乐精选', description: '慵懒爵士风', category: 'jazz' },
-                    { id: '2502683', name: '电子音乐', description: '动感节奏', category: 'electronic' },
-                    { id: '5212729', name: 'K-POP热门', description: '韩流音乐', category: 'kpop' },
-                    { id: '2233189', name: '民谣精选', description: '感人民谣', category: 'folk' }
-                ];
-                
-                // 如果是刷新操作或者没有缓存的推荐歌单，则重新生成
-                if (refresh || !window.cachedRecommendedPlaylists) {
-                    // 随机打乱顺序并取前10个
-                    window.cachedRecommendedPlaylists = [...allPlaylists]
-                        .sort(() => Math.random() - 0.5)
-                        .slice(0, 10);
-                }
-                
-                const recommendedPlaylists = window.cachedRecommendedPlaylists;
-                // 保存所有歌单以便全部播放功能使用
-                window.allDailyPlaylists = allPlaylists;
-                
-                // 获取当前日期
-                const today = new Date();
-                const dateString = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
-                
-                // 构建HTML
-                let html = `
-                    <div class="daily-date">
-                        <i class="fas fa-calendar"></i> ${dateString} 推荐歌单
-                        <div class="daily-actions">
-                            <button id="refreshDailyBtn" class="action-btn" title="换一批">
-                                <i class="fas fa-sync-alt"></i> 换一批
-                            </button>
-                            <button id="playAllDailyBtn" class="action-btn" title="全部播放">
-                                <i class="fas fa-play"></i> 全部播放
-                            </button>
-                        </div>
-                    </div>
-                    <div class="daily-playlists" id="dailyPlaylistsContainer">
-                `;
-                
-                // 添加推荐歌单
-                recommendedPlaylists.forEach(playlist => {
-                    html += `
-                        <div class="daily-playlist-item" data-category="${playlist.category}" onclick="loadRecommendedPlaylist('${playlist.id}')">
-                            <div class="daily-playlist-icon">
-                                <i class="fas fa-music"></i>
-                            </div>
-                            <div class="daily-playlist-info">
-                                <div class="daily-playlist-name">${playlist.name}</div>
-                                <div class="daily-playlist-desc">${playlist.description}</div>
-                                <div class="daily-playlist-category">${getCategoryName(playlist.category)}</div>
-                            </div>
-                            <div class="daily-playlist-action">
-                                <i class="fas fa-play-circle"></i>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                dailyResultsContainer.innerHTML = html;
-                
-                // 设置分类按钮点击事件
-                setupCategoryFilters();
-                
-                // 设置换一批按钮事件
-                document.getElementById('refreshDailyBtn').addEventListener('click', (e) => {
-                    e.stopPropagation(); // 阻止事件冒泡
-                    loadDailyRecommendations(true); // 传入true表示刷新
-                    showNotification('已为您更新推荐歌单', 'success');
-                });
-                
-                // 设置全部播放按钮事件
-                document.getElementById('playAllDailyBtn').addEventListener('click', (e) => {
-                    e.stopPropagation(); // 阻止事件冒泡
-                    playAllDailyPlaylists();
-                });
-                
-                // 添加样式
-                const style = document.createElement('style');
-                style.textContent = `
-                    .daily-date {
-                        font-size: 16px;
-                        color: rgba(255, 255, 255, 0.8);
-                        margin-bottom: 20px;
-                        padding: 10px;
-                        background: rgba(255, 255, 255, 0.05);
-                        border-radius: 10px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        justify-content: space-between;
-                    }
-                    
-                    .daily-actions {
-                        display: flex;
-                        gap: 10px;
-                    }
-                    
-                    .daily-actions .action-btn {
-                        background: rgba(255, 255, 255, 0.1);
-                        border: none;
-                        color: white;
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        display: flex;
-                        align-items: center;
-                        gap: 5px;
-                    }
-                    
-                    .daily-actions .action-btn:hover {
-                        background: rgba(255, 255, 255, 0.2);
-                        transform: translateY(-2px);
-                    }
-                    
-                    .daily-playlists {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 15px;
-                    }
-                    
-                    .daily-playlist-item {
-                        display: flex;
-                        align-items: center;
-                        padding: 15px;
-                        background: rgba(255, 255, 255, 0.05);
-                        border-radius: 12px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                    }
-                    
-                    .daily-playlist-item:hover {
-                        background: rgba(255, 255, 255, 0.1);
-                        transform: translateY(-2px);
-                    }
-                    
-                    .daily-playlist-icon {
-                        width: 50px;
-                        height: 50px;
-                        border-radius: 10px;
-                        background: linear-gradient(135deg, #ff6b6b, #ff8a80);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-right: 15px;
-                        font-size: 20px;
-                        color: white;
-                    }
-                    
-                    .daily-playlist-info {
-                        flex: 1;
-                    }
-                    
-                    .daily-playlist-name {
-                        font-weight: 600;
-                        font-size: 16px;
-                        margin-bottom: 5px;
-                    }
-                    
-                    .daily-playlist-desc {
-                        font-size: 14px;
-                        color: rgba(255, 255, 255, 0.6);
-                    }
-                    
-                    .daily-playlist-action {
-                        font-size: 24px;
-                        color: #ff6b6b;
-                        margin-left: 15px;
-                        opacity: 0.8;
-                        transition: all 0.3s ease;
-                    }
-                    
-                    .daily-playlist-item:hover .daily-playlist-action {
-                        opacity: 1;
-                        transform: scale(1.1);
-                    }
-                    
-                    .daily-playlist-category {
-                        font-size: 12px;
-                        color: #ff6b6b;
-                        margin-top: 5px;
-                        display: inline-block;
-                        padding: 2px 8px;
-                        background: rgba(255, 107, 107, 0.1);
-                        border-radius: 10px;
-                    }
-                `;
-                document.head.appendChild(style);
-                
-            } catch (error) {
-                console.error('加载今日推荐失败:', error);
-                dailyResultsContainer.innerHTML = `
-                    <div class="error">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <div>加载今日推荐失败，请稍后再试</div>
-                    </div>
-                `;
-            }
-        }
-        
-        // 设置分类过滤器
-        function setupCategoryFilters() {
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            const playlistItems = document.querySelectorAll('.daily-playlist-item');
-            
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // 移除所有按钮的active类
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    // 给当前点击的按钮添加active类
-                    button.classList.add('active');
-                    
-                    const category = button.getAttribute('data-category');
-                    
-                    // 过滤歌单
-                    playlistItems.forEach(item => {
-                        if (category === 'all' || item.getAttribute('data-category') === category) {
-                            item.style.display = 'flex';
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        }
-        
-        // 获取分类名称
-        function getCategoryName(category) {
-            const categoryMap = {
-                'douyin': '抖音热门',
-                'motivational': '励志',
-                'light': '轻音乐',
-                'dj': 'DJ',
-                'chinese': '华语',
-                'western': '欧美'
-            };
-            return categoryMap[category] || '其他';
-        }
-        
-        // 加载推荐歌单
-        async function loadRecommendedPlaylist(playlistId) {
-            // 切换到歌单标签页
-            switchTab('playlist');
-            
-            // 设置歌单ID输入框
-            document.getElementById('playlistIdInput').value = playlistId;
-            
-            // 解析歌单
-            parsePlaylist();
-            
-            // 显示通知
-            showNotification('正在加载推荐歌单', 'info');
-        }
-        
-        // 全部播放今日推荐歌单
-        async function playAllDailyPlaylists() {
-            if (!window.cachedRecommendedPlaylists || window.cachedRecommendedPlaylists.length === 0) {
-                showNotification('没有可播放的推荐歌单', 'warning');
-                return;
-            }
-            
-            // 随机选择一个歌单播放
-            const randomIndex = Math.floor(Math.random() * window.cachedRecommendedPlaylists.length);
-            const randomPlaylist = window.cachedRecommendedPlaylists[randomIndex];
-            
-            showNotification(`正在播放: ${randomPlaylist.name}`, 'info');
-            loadRecommendedPlaylist(randomPlaylist.id);
-        }
 
         // 切换标签页
         function switchTab(tabName) {
